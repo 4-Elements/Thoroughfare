@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
-const myURI = '';
-const URI = process.env.MONGO_URI || myURI;
+// const myURI =
+//   'mongodb+srv://jacob05311991:SimplePassword@cluster0.b885ied.mongodb.net/?retryWrites=true&w=majority';
+// const URI = process.env.MONGO_URI || myURI;
 
 // const Chat = new Schema({
 //   chatID: {

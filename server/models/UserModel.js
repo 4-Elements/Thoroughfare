@@ -1,24 +1,21 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
-// const myURI = '';
-// const URI = process.env.MONGO_URI || myURI;
+
+const myURI = 'mongodb+srv://tristan913:1234@cluster0.zlp4cgx.mongodb.net/';
+const URI = process.env.MONGO_URI || myURI;
 
 const User = new Schema({
   username: {
     type: String,
-    required: true,
   },
   password: {
     type: String,
-    required: true,
   },
   userType: {
     type: String,
-    required: true,
   },
   mentorCode: {
     type: Number,
-    required: true,
   },
   menteeIds: [
     {
