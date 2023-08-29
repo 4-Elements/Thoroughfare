@@ -27,7 +27,7 @@ userController.createUser = async (req, res, next) => {
   } catch (err) {
     next(
       createErr({
-        method: 'post',
+        method: 'POST',
         type: 'creating user',
         err,
       }),

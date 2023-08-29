@@ -9,6 +9,9 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const userRouter = require('./routes/userRouter');
+const lessonRouter = require('./routes/lessonRouter');
+const taskRouter = require('./routes/taskRouter');
+const chatRouter = require('./routes/chatRouter');
 // const myURI = '';
 // mongoose
 //   .connect(myURI, {
@@ -25,6 +28,9 @@ const userRouter = require('./routes/userRouter');
 //need to serve static files
 
 app.use('/api/user', userRouter);
+app.use('/api/lesson', lessonRouter);
+app.use('/api/task', taskRouter);
+app.use('/api/chat', chatRouter);
 
 app.get('/', (req, res) => {
   res.status(200).sendFile(path.join(__dirname, '../client/'));
