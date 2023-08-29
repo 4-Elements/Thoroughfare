@@ -14,44 +14,44 @@ const User = new Schema({
     type: String,
     required: [true, 'Please provide a Password!'],
   },
-  // userType: {
-  //   type: String,
-  // },
-  // mentorCode: {
-  //   type: String,
-  //   required: true,
-  // },
-  // menteeIds: [
-  //   {
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: 'User',
-  //   },
-  // ],
-  // lessonsAccess: [
-  //   {
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: 'Lesson',
-  //   },
-  // ],
-  // lessonsAssigned: [
-  //   {
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: 'Lesson',
-  //   },
-  // ],
-  // taskProgress: [
-  //   {
-  //     task: { type: mongoose.Schema.Types.ObjectId, ref: 'Task' },
-  //     completed: { type: Boolean, required: true, default: false },
-  //     response: String,
-  //   },
-  // ],
-  // activeChats: [
-  //   {
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: 'Chat',
-  //   },
-  // ],
+  userType: {
+    type: String,
+  },
+  mentorCode: {
+    type: String,
+    required: true,
+  },
+  menteeIds: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
+  ],
+  lessonsAccess: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Lesson',
+    },
+  ],
+  lessonsAssigned: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Lesson',
+    },
+  ],
+  taskProgress: [
+    {
+      task: { type: mongoose.Schema.Types.ObjectId, ref: 'Task' },
+      completed: { type: Boolean, required: true, default: false },
+      response: String,
+    },
+  ],
+  activeChats: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Chat',
+    },
+  ],
 });
 
 module.exports = mongoose.model('User', User);
