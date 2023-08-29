@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
-const myURI = 'mongodb+srv://tristan913:1234@cluster0.zlp4cgx.mongodb.net/';
-const URI = process.env.MONGO_URI || myURI;
+// const myURI = '';
+// const URI = process.env.MONGO_URI || myURI;
 
 const User = new Schema({
   username: {
