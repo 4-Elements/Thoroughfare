@@ -17,7 +17,7 @@ const createErr = error => {
 //getting all lessons
 lessonController.allLessons = async (req, res, next) => {
   try {
-    const allTasks = await Lessons.find({});
+    const allLessons = await Lessons.find({});
     next();
   } catch (err) {
     next(
@@ -33,11 +33,12 @@ lessonController.allLessons = async (req, res, next) => {
 //creating a new lesson
 lessonController.newLesson = async (req, res, next) => {
   const { lessonNumber, lessonName } = req.body;
-  // mentorAccess=[Mentor._id], tasks=[]
   try {
     const newLesson = new Lesson({
       lessonNumber: lessonNumber,
       lessonName: lessonName,
+      mentorAccess: [], //mentor id will be added?
+      tasks: [], //tasks are added through the task controller specific by id
     });
     const savedLesson = await newLesson.save();
     next();
@@ -53,47 +54,25 @@ lessonController.newLesson = async (req, res, next) => {
 };
 
 //editing a new lesson
-
 lessonController.editLesson = async (req, res, next) => {
   const { lessonNumber, lessonName } = req.body;
-  // mentorAccess=[Mentor._id], tasks=[]
-  // try {
-  //   const newLesson = new Lesson({
-  //     lessonNumber: lessonNumber,
-  //     lessonName: lessonName,
-  //   });
-  //   const savedLesson = await newLesson.save();
-  //   next();
-  // } catch (err) {
-  //   next(
-  //     createErr({
-  //       method: 'POST',
-  //       type: 'creating new lesson',
-  //       err,
-  //     }),
-  //   );
-  // }
 };
 
 lessonController.deleteLesson = async (req, res, next) => {
-  const { lessonNumber, lessonName } = req.body;
-  // mentorAccess=[Mentor._id], tasks=[]
-  // try {
-  //   const newLesson = new Lesson({
-  //     lessonNumber: lessonNumber,
-  //     lessonName: lessonName,
-  //   });
-  //   const savedLesson = await newLesson.save();
-  //   next();
-  // } catch (err) {
-  //   next(
-  //     createErr({
-  //       method: 'POST',
-  //       type: 'creating new lesson',
-  //       err,
-  //     }),
-  //   );
-  // }
+  const { lessonNumber } = req.params;
+  try {
+    const response = await Message.findOneAndDelete({ message });
+    res.locals.deletedMessage = response;
+    next();
+  } catch (err) {
+    next(
+      createErr({
+        method: 'DELETE',
+        type: 'deleting new lesson',
+        err,
+      }),
+    );
+  }
 };
 
 module.exports = lessonController;

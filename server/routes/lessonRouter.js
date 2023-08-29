@@ -7,11 +7,12 @@ router.get('/', lessonController.allLessons, (req, res) => {
   res.status(200).json();
 });
 //adding a new lesson
-router.post('/newTask', lessonController.newLesson, (req, res) => {
+router.post('/newLesson', lessonController.newLesson, (req, res) => {
   res.status(200).json();
 });
+
 //deleting lesson
-router.delete('/deleteLesson', lessonController.deleteLesson, (req, res) => {
-  res.status(200).json();
+router.delete('/:lessonNumber', lessonController.deleteLesson, (req, res) => {
+  res.sendStatus(200);
 });
 module.exports = router;

@@ -34,16 +34,22 @@ lessonController.allTasks = async (req, res, next) => {
 //adds a new task
 
 lessonController.newTask = async (req, res, next) => {
-  // const { lessonNumber, lessonName} = req.body;
-  // mentorAccess=[Mentor._id], tasks=[]
+  const { taskName, taskPrompt, taskResource, taskQuestion } = req.body;
   try {
     const newTask = new Task({
       taskName: taskName,
       taskPrompt: taskPrompt,
       taskResource: taskResource,
       taskQuestion: taskQuestion,
+      lesson: lessonId,
     });
     const savedTask = await newTask.save();
+    await Lesson.findByIdAndUpdate(lessonId, {
+      $addToSet: { tasks: savedTask._id },
+    });
+
+    res.status(201).json(savedTask);
+
     next();
   } catch (err) {
     next(
