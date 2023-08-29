@@ -9,28 +9,29 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const userRouter = require('./routes/userRouter');
-const lessonRouter = require('./routes/lessonRouter');
-const taskRouter = require('./routes/taskRouter');
-const chatRouter = require('./routes/chatRouter');
-// const myURI = '';
-// mongoose
-//   .connect(myURI, {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-//   })
-//   .then(() => {
-//     console.log('Connected to MongoDB');
-//   })
-//   .catch(error => {
-//     console.error('Error connecting to MongoDB:', error);
-//   });
+// const lessonRouter = require('./routes/lessonRouter');
+// const taskRouter = require('./routes/taskRouter');
+// const chatRouter = require('./routes/chatRouter');
+
+const myURI = 'mongodb+srv://tristan913:1234@cluster0.zlp4cgx.mongodb.net/';
+mongoose
+  .connect(myURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log('Connected to MongoDB');
+  })
+  .catch(error => {
+    console.error('Error connecting to MongoDB:', error);
+  });
 
 //need to serve static files
 
 app.use('/api/user', userRouter);
-app.use('/api/lesson', lessonRouter);
-app.use('/api/task', taskRouter);
-app.use('/api/chat', chatRouter);
+// app.use('/api/lesson', lessonRouter);
+// app.use('/api/task', taskRouter);
+// app.use('/api/chat', chatRouter);
 
 app.get('/', (req, res) => {
   res.status(200).sendFile(path.join(__dirname, '../client/'));
