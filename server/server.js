@@ -2,26 +2,30 @@ const path = require('path');
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
-const PORT = 3001;
+const PORT = 3000;
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+const userRouter = require('./routes/userRouter');
+// const myURI = '';
+// mongoose
+//   .connect(myURI, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//   })
+//   .then(() => {
+//     console.log('Connected to MongoDB');
+//   })
+//   .catch(error => {
+//     console.error('Error connecting to MongoDB:', error);
+//   });
 
-const myURI = '';
-mongoose
-  .connect(myURI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
-    console.log('Connected to MongoDB');
-  })
-  .catch(error => {
-    console.error('Error connecting to MongoDB:', error);
-  });
+//need to serve static files
 
-//need to server express files
-// app.use('/messages', messageRouting);
+app.use('/api/user', userRouter);
+
 app.get('/', (req, res) => {
   res.status(200).sendFile(path.join(__dirname, '../client/'));
 });
