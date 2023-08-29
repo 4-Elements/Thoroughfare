@@ -4,7 +4,10 @@
   "description": "An application for Onboarding engineers into a new team or project.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon server/server.js",
+    "client": "webpack-dev-server --mode development --open --hot",
+    "build": "webpack --mode production",
+    "dev": " nodemon ./server/server.js & webpack-dev-server --mode development"
   },
   "keywords": [],
   "author": "",
