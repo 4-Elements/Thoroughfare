@@ -5,10 +5,6 @@ const { Schema } = mongoose;
 // const URI = process.env.MONGO_URI || myURI;
 
 const Lesson = new Schema({
-  lessonID: {
-    type: Number,
-    required: true,
-  },
   lessonNumber: {
     type: Number,
     required: true,
@@ -17,6 +13,12 @@ const Lesson = new Schema({
     type: String,
     required: true,
   },
+  mentorAccess: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
+  ],
   tasks: [
     {
       type: mongoose.Schema.Types.ObjectId,

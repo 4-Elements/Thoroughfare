@@ -3,8 +3,10 @@ const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
 const PORT = 3000;
+
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -13,7 +15,9 @@ const userRouter = require('./routes/userRouter');
 // const taskRouter = require('./routes/taskRouter');
 // const chatRouter = require('./routes/chatRouter');
 
+
 const myURI = 'mongodb+srv://tristan913:1234@cluster0.zlp4cgx.mongodb.net/';
+
 mongoose
   .connect(myURI, {
     useNewUrlParser: true,
@@ -22,7 +26,7 @@ mongoose
   .then(() => {
     console.log('Connected to MongoDB');
   })
-  .catch(error => {
+  .catch((error) => {
     console.error('Error connecting to MongoDB:', error);
   });
 
@@ -35,6 +39,10 @@ app.use('/api/user', userRouter);
 
 app.get('/', (req, res) => {
   res.status(200).sendFile(path.join(__dirname, '../client/'));
+});
+
+app.get('/api', (req, res) => {
+  res.send('Received!');
 });
 
 app.use((req, res) => res.sendStatus(404));

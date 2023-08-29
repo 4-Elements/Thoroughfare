@@ -5,53 +5,13 @@ const { Schema } = mongoose;
 // const URI = process.env.MONGO_URI || myURI;
 
 const Task = new Schema({
-  taskID: {
-    type: Number,
-    required: true,
-  },
   taskName: {
     type: String,
     required: true,
   },
-  taskNumber: {
-    type: Number,
-    required: true,
-  },
-  taskType: {
-    type: String,
-    required: true,
-  },
-  taskPrompt: {
-    type: String,
-  },
-  taskResources: [
-    {
-      type: String,
-    },
-  ],
-  taskQuestion: {
-    type: String,
-  },
-  taskQuestionResponse: {
-    type: String,
-  },
-  chat: [
-    {
-      sender: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-      },
-      timestamp: {
-        type: Date,
-        default: Date.now,
-      },
-      message: String,
-    },
-  ],
-  taskComplete: {
-    type: Boolean,
-    required: true,
-  },
+  taskPrompt: String,
+  taskResource: String,
+  taskQuestion: String,
 });
 
 module.exports = mongoose.model('Task', Task);

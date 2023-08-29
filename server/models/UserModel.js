@@ -15,7 +15,8 @@ const User = new Schema({
     type: String,
   },
   mentorCode: {
-    type: Number,
+    type: String,
+    required: true,
   },
   menteeIds: [
     {
@@ -35,9 +36,17 @@ const User = new Schema({
       ref: 'Lesson',
     },
   ],
-  lessonsAssigned: [
+  taskProgress: [
     {
-      type: String,
+      task: { type: mongoose.Schema.Types.ObjectId, ref: 'Task' },
+      completed: { type: Boolean, required: true, default: false },
+      response: String,
+    },
+  ],
+  activeChats: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Chat',
     },
   ],
 });
