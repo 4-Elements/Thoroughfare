@@ -37,10 +37,15 @@ lessonController.newLesson = async (req, res, next) => {
     const newLesson = new Lesson({
       lessonNumber: lessonNumber,
       lessonName: lessonName,
-      mentorAccess: [], //mentor id will be added?
+      mentorAccess: [], //mentor id will be added? mentorAccess=[Mentor._id]
       tasks: [], //tasks are added through the task controller specific by id
     });
     const savedLesson = await newLesson.save();
+
+    await User.updateMany(
+        { $addToSet: { lessonsAccess: savedLesson._id } } // ?? still needs figuiring out but updated the lessonAccess of the User? 
+    );
+
     next();
   } catch (err) {
     next(
@@ -52,6 +57,37 @@ lessonController.newLesson = async (req, res, next) => {
     );
   }
 };
+
+
+
+
+
+- Add new Task to a Lesson
+  - Store taskName, taskPrompt, taskResource, taskQuestion
+  - Add Task.\_id to the Lesson.tasks array
+- Add another mentor to lesson
+  - Use mentor's mentorCode to find Mentor.\_id and add that to the Lesson's mentorAccess, and add the Lesson.\_id to that Mentor's lessonsAccess []
+- Assign a Lesson to a Mentee
+  - Add Lesson.\_id to user's lessonsAssigned []
+- Things you can view:
+  - Your mentor code
+  - Lessons in lessonsAccess (Number + Name)
+    - See tasks []
+      - Tasks show taskName, taskPrompt, taskResource
+  - Mentees (Name + Tasks-Complete / Total-Tasks)
+    - See lessons[] with tasks-complete / total-tasks in that lesson
+      - Click in a lesson(?) to see completion-status-check, taskname
+      - Click in to see taskName, taskComplete, taskPrompt, taskResource, taskQuestion, and user's response
+
+
+
+
+
+
+
+
+
+
 
 //editing a new lesson
 lessonController.editLesson = async (req, res, next) => {

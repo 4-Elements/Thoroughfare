@@ -45,12 +45,10 @@ lessonController.newTask = async (req, res, next) => {
     });
     const savedTask = await newTask.save();
     await Lesson.findByIdAndUpdate(lessonId, {
-      $addToSet: { tasks: savedTask._id },
+      $addToSet: { tasks: savedTask._id }, // mongo operator that adds to array unless tha value is alreay present, in this case it is adding to the lesson array
+      //this might need some hashing out^
     });
-
-    res.status(201).json(savedTask);
-
-    next();
+    next(savedTask);
   } catch (err) {
     next(
       createErr({
@@ -61,43 +59,9 @@ lessonController.newTask = async (req, res, next) => {
     );
   }
 };
-// - Add new Task to a Lesson
-//   - Add Task.\_id to the Lesson.tasks array ???
 
-lessonController.editTask = async (req, res, next) => {
-  // const { lessonNumber, lessonName} = req.body;
-  // mentorAccess=[Mentor._id], tasks=[]
-  // try {
-  //   const savedTask = await newTask.save();
-  //   next();
-  // } catch (err) {
-  //   next(
-  //     createErr({
-  //       method: 'POST',
-  //       type: 'creating new task',
-  //       err,
-  //     }),
-  //   );
-  // }
-};
+lessonController.editTask = async (req, res, next) => {};
 
-lessonController.deleteTask = async (req, res, next) => {
-  // const { lessonNumber, lessonName} = req.body;
-  // mentorAccess=[Mentor._id], tasks=[]
-  // try {
-  //   const savedTask = await newTask.save();
-  //   next();
-  // } catch (err) {
-  //   next(
-  //     createErr({
-  //       method: 'POST',
-  //       type: 'creating new task',
-  //       err,
-  //     }),
-  //   );
-  // }
-};
+lessonController.deleteTask = async (req, res, next) => {};
 
 module.exports = taskController;
-
-//   - Use mentor's mentorCode to find Mentor.\_id and add that to the Lesson's mentorAccess, and add the Lesson.\_id to that Mentor's lessonsAccess []
