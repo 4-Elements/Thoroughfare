@@ -56,20 +56,42 @@ lessonController.newTask = async (req, res, next) => {
   }
 };
 // - Add new Task to a Lesson
+//   - Add Task.\_id to the Lesson.tasks array ???
+
+lessonController.editTask = async (req, res, next) => {
+  // const { lessonNumber, lessonName} = req.body;
+  // mentorAccess=[Mentor._id], tasks=[]
+  // try {
+  //   const savedTask = await newTask.save();
+  //   next();
+  // } catch (err) {
+  //   next(
+  //     createErr({
+  //       method: 'POST',
+  //       type: 'creating new task',
+  //       err,
+  //     }),
+  //   );
+  // }
+};
+
+lessonController.deleteTask = async (req, res, next) => {
+  // const { lessonNumber, lessonName} = req.body;
+  // mentorAccess=[Mentor._id], tasks=[]
+  // try {
+  //   const savedTask = await newTask.save();
+  //   next();
+  // } catch (err) {
+  //   next(
+  //     createErr({
+  //       method: 'POST',
+  //       type: 'creating new task',
+  //       err,
+  //     }),
+  //   );
+  // }
+};
 
 module.exports = taskController;
 
-//   - Add Task.\_id to the Lesson.tasks array
-// - Add another mentor to lesson
 //   - Use mentor's mentorCode to find Mentor.\_id and add that to the Lesson's mentorAccess, and add the Lesson.\_id to that Mentor's lessonsAccess []
-// - Assign a Lesson to a Mentee
-//   - Add Lesson.\_id to user's lessonsAssigned []
-// - Things you can view:
-//   - Your mentor code
-//   - Lessons in lessonsAccess (Number + Name)
-//     - See tasks []
-//       - Tasks show taskName, taskPrompt, taskResource
-//   - Mentees (Name + Tasks-Complete / Total-Tasks)
-//     - See lessons[] with tasks-complete / total-tasks in that lesson
-//       - Click in a lesson(?) to see completion-status-check, taskname
-//       - Click in to see taskName, taskComplete, taskPrompt, taskResource, taskQuestion, and user's response
