@@ -1,9 +1,18 @@
-// const express = require('express');
-// const router = express.Router();
-// const lessonController = require();
+const express = require('express');
+const router = express.Router();
+const lessonController = require('../controllers/lessonController');
 
-// router.get('/', lessonController., (req, res) =>{
-//   res.status(200).json();
-// });
+//getting all lessons
+router.get('/', lessonController.allLessons, (req, res) => {
+  res.status(200).json();
+});
+//adding a new lesson
+router.post('/newLesson', lessonController.newLesson, (req, res) => {
+  res.status(200).json();
+});
 
-// module.exports = router;
+//deleting lesson
+router.delete('/:lessonNumber', lessonController.deleteLesson, (req, res) => {
+  res.sendStatus(200);
+});
+module.exports = router;

@@ -28,4 +28,9 @@ router.get('/secret', userController.authorize, (req, res) => {
   res.status(200).send('Secret message: Eevee is best pokemon.');
 });
 
+//deleting user account
+router.delete('/', userController.deleteUser, (req, res) => {
+  res.status(200).json({ message: 'User successfully deleted' });
+});
+
 module.exports = router;
