@@ -2,12 +2,13 @@ const path = require('path');
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
-const PORT = 3001;
+const PORT = 3000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const myURI = '';
+const myURI =
+  'mongodb+srv://aderritt6158:qjxKqRlDpUZ9ZStC@cluster0.rti6q70.mongodb.net/sandbox?retryWrites=true&w=majority';
 mongoose
   .connect(myURI, {
     useNewUrlParser: true,
@@ -16,7 +17,7 @@ mongoose
   .then(() => {
     console.log('Connected to MongoDB');
   })
-  .catch(error => {
+  .catch((error) => {
     console.error('Error connecting to MongoDB:', error);
   });
 
@@ -24,6 +25,10 @@ mongoose
 // app.use('/messages', messageRouting);
 app.get('/', (req, res) => {
   res.status(200).sendFile(path.join(__dirname, '../client/'));
+});
+
+app.get('/api', (req, res) => {
+  res.send('Received!');
 });
 
 app.use((req, res) => res.sendStatus(404));
