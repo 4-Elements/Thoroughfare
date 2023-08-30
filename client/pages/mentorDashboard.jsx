@@ -4,13 +4,15 @@
 
 // ---- imports go here ----
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 // import './mentorDashboard.scss';
 import CurrentMenteeList from '../components/CurrentMenteeList.jsx';
+import { useRouteLoaderData } from 'react-router-dom';
 
 // ---- build and export mentor dashboard here ----
 export default function MentorDash() {
   const [currentMentees, setCurrentMentees] = useState([]);
+  const userData = useRouteLoaderData('home');
 
   // const getMentees = () => {
   //   fetch(queryString)
@@ -21,23 +23,23 @@ export default function MentorDash() {
   // };
 
   // NOTE: This is just for testing & should be removed later
-  useEffect(
-    () =>
-      setCurrentMentees([
-        {
-          name: 'Todd',
-          lessonsAssigned: [{ name: 'React' }, { name: 'Redux' }],
-        },
-      ]),
-    []
-  );
+  // useEffect(
+  //   () =>
+  //     setCurrentMentees([
+  //       {
+  //         name: 'Todd',
+  //         lessonsAssigned: [{ name: 'React' }, { name: 'Redux' }],
+  //       },
+  //     ]),
+  //   []
+  // );
 
   // remove this - it is just for testing
 
   return (
-    <div className='mentorDash'>
+    <div className="mentorDash">
       <h1>Mentor Dashboard</h1>
-      {/* <CurrentMenteeList currentMentees={currentMentees} /> */}
+      <CurrentMenteeList />
     </div>
   );
 }
