@@ -25,8 +25,8 @@ const router = createBrowserRouter(
       <Route path='/lessons' element={<MenteeDash />} />
       <Route path='/login' element={<Login />} />
       <Route path='/signup' element={<Signup />} />
-    </Route>
-  )
+    </Route>,
+  ),
 );
 
 export default function App() {
