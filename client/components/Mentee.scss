@@ -1,3 +1,8 @@
 .Mentee {
   border: 1px solid orange;
 }
+
+.MenteeNameAndButton {
+  display: flex;
+  justify-content: space-between;
+}
