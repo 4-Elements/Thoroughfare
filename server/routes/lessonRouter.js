@@ -3,9 +3,10 @@ const router = express.Router();
 const lessonController = require('../controllers/lessonController');
 
 //getting all lessons
-router.get('/', lessonController.allLessons, (req, res) => {
+router.get('/', userController.authorize, lessonController.allLessons, (req, res) => {
   res.status(200).json();
 });
+
 //adding a new lesson
 router.post('/newLesson', lessonController.newLesson, (req, res) => {
   res.status(200).json();

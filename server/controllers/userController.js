@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/UserModel.js');
+const Lesson = require('../models/LessonModel.js');
+const Task = require('../models/TaskModel.js');
 const PRIVATE_KEY = 'fC0mJaPOA9XHLkMkmt8j';
 
 const userController = {};
@@ -19,42 +21,120 @@ const createErr = (error) => {
 };
 
 userController.getUser = async (req, res, next) => {
+  // Have User._id from authorization check
+  // Fetch all user data and save
+  const userId = req.userId;
   try {
     const response = await User.findOne({
-      username: username,
+      _id: userId,
     });
-    res.locals.allMessages = response;
+    console.log('userController.getUser queried for user:', response);
+    res.locals.user = response;
     next();
   } catch (err) {
     next(
       createErr({
         method: 'POST',
-        type: 'creating user',
+        type: 'Looking up user',
         err,
-      }),
+      })
     );
   }
 };
 
-userController.getUser = async (req, res, next) => {
-  try {
-    const response = await User.findOne({
-      username: username,
-    });
-    res.locals.allMessages = response;
-    next();
-  } catch (err) {
-    next(
-      createErr({
-        method: 'POST',
-        type: 'creating user',
-        err,
-      }),
-    );
+userController.getAuxUserData = async (req, res, next) => {
+  const { _id, userType, mentorCode, lessonsAccess, taskProgress } =
+    res.locals.user;
+
+  if (userType == 'mentor') {
+    try {
+      // Use [menteeIds] to grab mentee objs -> username, assigned, progress
+      const menteeList = await User.find({
+        mentorCode: mentorCode,
+        userType: 'mentee',
+      });
+      const menteeData = menteeList.map((mentee) => {
+        return {
+          username: mentee.username,
+          lessonsAssigned: mentee.lessonsAssigned,
+          taskProgress: mentee.taskProgress,
+        };
+      });
+      console.log('mentee list', menteeData);
+      //// Use [lessonsAccess] -> Get lesson titles
+      const lessonListMentor = await Lesson.find({ mentorAccess: _id });
+      const lessonDataMentor = lessonListMentor.map((lesson) => {
+        return {
+          lessonNumber: lesson.lessonNumber,
+          lessonName: lesson.lessonName,
+          tasks: lesson.tasks,
+        };
+      });
+      console.log('lesson list', lessonDataMentor);
+
+      const userData = {
+        mentorCode: mentorCode,
+        menteeData: menteeData,
+        lessonData: lessonDataMentor,
+      };
+      res.locals.userData = userData;
+      next();
+    } catch (err) {
+      next(
+        createErr({
+          method: 'getAuxUserData-mentor',
+          type: 'Fetching extra mentor data.',
+          err,
+        })
+      );
+    }
+  } else if (userType == 'mentee') {
+    try {
+      // Use [lessonsAssigned] to grab lessons to grab tasks
+      const lessonListMentee = await Lesson.find({
+        _id: { $in: lessonsAccess },
+      });
+      const lessonDataMentee = lessonListMentee.map((lesson) => {
+        return {
+          lessonNumber: lesson.lessonNumber,
+          lessonName: lesson.lessonName,
+          tasks: lesson.tasks,
+        };
+      });
+      const taskIdsMentee = [];
+      for (let i = 0; i < taskIdsMentee.length; i++) {
+        taskIdsMentee.push(...lessonListMentee[i].tasks);
+      }
+      const taskListMentee = await Task.find({ _id: { $in: taskIdsMentee } });
+      const taskObj = {};
+      for (let i = 0; i < taskListMentee.length; i++) {
+        taskObj[taskListMentee[i]._id] = {
+          taskName: taskListMentee[i].taskName,
+          taskPrompt: taskListMentee[i].taskPrompt,
+          taskResource: taskListMentee[i].taskResource,
+          taskQuestion: taskListMentee[i].taskQuestion,
+        };
+      }
+
+      const userData = {
+        lessonData: lessonDataMentee,
+        taskData: taskObj,
+        taskProgress: taskProgress,
+      };
+      res.locals.userData = userData;
+      next();
+    } catch (err) {
+      next(
+        createErr({
+          method: 'getAuxUserData-mentor',
+          type: 'Fetching extra mentor data.',
+          err,
+        })
+      );
+    }
   }
+  next('userType error');
 };
-
-
 
 userController.hashPass = (req, res, next) => {
   bcrypt
@@ -75,15 +155,32 @@ userController.hashPass = (req, res, next) => {
 };
 
 userController.createUser = async (req, res, next) => {
-  const { username } = req.body;
+  const { username, userType } = req.body;
   const password = res.locals.hashedPassword;
 
+  const newUser = new User({
+    username: username,
+    password: password,
+  });
+
+  if (req.body.mentorCode && req.body.mentorCode.length) {
+    newUser.userType = 'mentee';
+    newUser.mentorCode = req.body.mentorCode;
+  } else {
+    newUser.userType = 'mentor';
+    newUser.mentorCode = Date.now() % 100000;
+  }
   try {
-    const newUser = new User({
-      username: username,
-      password: password,
-    });
-    const savedUser = await newUser.save();
+    if (newUser.userType === 'mentee') {
+      newUserMentor = await User.find({
+        mentorCode: newUser.mentorCode,
+        userType: 'mentor',
+      });
+      if (newUserMentor.length === 0)
+        return res.status(400).send({ message: 'Error: Invalid mentor code.' });
+    }
+    let savedUser = await newUser.save();
+    res.locals.user = savedUser;
     next();
   } catch (err) {
     next(
@@ -109,7 +206,8 @@ userController.authenticateUser = (req, res, next) => {
         .compare(req.body.password, user.password)
         .then((passwordCheck) => {
           if (!passwordCheck) {
-            return response
+            console.log('Failed password check');
+            return res
               .status(400)
               .send({ message: 'Password does not match', error });
           } else next();
@@ -148,7 +246,6 @@ userController.generateToken = (req, res, next) => {
 };
 
 userController.authorize = async (req, res, next) => {
-  const { username } = req.body;
   try {
     const token = await req.headers.authorization.split(' ')[1];
     const decodedToken = await jwt.verify(token, PRIVATE_KEY);
@@ -157,6 +254,7 @@ userController.authorize = async (req, res, next) => {
     req.username = authenticateUser.username;
     next();
   } catch (err) {
+    res.redirect('/login');
     next(
       createErr({
         method: 'Autorization',
@@ -199,6 +297,7 @@ userController.authenticateUser = (req, res, next) => {
         .compare(req.body.password, user.password)
         .then((passwordCheck) => {
           if (!passwordCheck) {
+            console.log('failed password check');
             return response
               .status(400)
               .send({ message: 'Password does not match', error });
@@ -238,13 +337,13 @@ userController.generateToken = (req, res, next) => {
 };
 
 userController.authorize = async (req, res, next) => {
-  const { username } = req.body;
   try {
     const token = await req.headers.authorization.split(' ')[1];
     const decodedToken = await jwt.verify(token, PRIVATE_KEY);
     const authenticateUser = await decodedToken;
     req.userId = authenticateUser.userId;
     req.username = authenticateUser.username;
+    console.log('Authorized:', req.userId);
     next();
   } catch (err) {
     next(
@@ -253,25 +352,6 @@ userController.authorize = async (req, res, next) => {
         type: 'Authorizing User Session',
         err,
       })
-    );
-  }
-};
-
-userController.deleteUser = async (req, res, next) => {
-  const { username } = req.body;
-  try {
-    const newUser = new User({
-      username: username,
-    });
-    const deletedUser = await newUser.delete();
-    next();
-  } catch (err) {
-    next(
-      createErr({
-        method: 'POST',
-        type: 'creating user',
-        err,
-      }),
     );
   }
 };

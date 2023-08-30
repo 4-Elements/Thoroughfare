@@ -19,7 +19,7 @@ const User = new Schema({
   },
   mentorCode: {
     type: String,
-    required: true,
+    required: false,
   },
   menteeIds: [
     {
