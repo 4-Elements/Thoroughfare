@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
-// const myURI =
-//   'mongodb+srv://jacob05311991:SimplePassword@cluster0.b885ied.mongodb.net/?retryWrites=true&w=majority';
-// const URI = process.env.MONGO_URI || myURI;
+
+const myURI = 'mongodb+srv://tristan913:1234@cluster0.zlp4cgx.mongodb.net/';
+const URI = process.env.MONGO_URI || myURI;
 
 const Lesson = new Schema({
   lessonNumber: {

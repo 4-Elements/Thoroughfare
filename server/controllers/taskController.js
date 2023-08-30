@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
-const Task = require('../routes/taskRouter');
-
+const Lesson = require('../models/LessonModel.js');
+const Task = require('../models/TaskModel.js');
+const User = require('../models/UserModel.js');
 const taskController = {};
 
 const createErr = error => {
@@ -16,7 +17,7 @@ const createErr = error => {
 };
 
 //Gets all tasks
-lessonController.allTasks = async (req, res, next) => {
+taskController.allTasks = async (req, res, next) => {
   try {
     const allTasks = await Task.find({});
     next();
@@ -33,8 +34,10 @@ lessonController.allTasks = async (req, res, next) => {
 
 //adds a new task
 
-lessonController.newTask = async (req, res, next) => {
-  const { taskName, taskPrompt, taskResource, taskQuestion } = req.body;
+taskController.newTask = async (req, res, next) => {
+  console.log('entered');
+  const { taskName, taskPrompt, taskResource, taskQuestion, lessonId } =
+    req.body;
   try {
     const newTask = new Task({
       taskName: taskName,
@@ -45,11 +48,12 @@ lessonController.newTask = async (req, res, next) => {
     });
     const savedTask = await newTask.save();
     await Lesson.findByIdAndUpdate(lessonId, {
-      $addToSet: { tasks: savedTask._id }, // mongo operator that adds to array unless tha value is alreay present, in this case it is adding to the lesson array
-      //this might need some hashing out^
+      $addToSet: { tasks: savedTask._id },
     });
-    next(savedTask);
+    req.savedTask = savedTask;
+    next();
   } catch (err) {
+    console.log(err);
     next(
       createErr({
         method: 'POST',
@@ -60,8 +64,54 @@ lessonController.newTask = async (req, res, next) => {
   }
 };
 
-lessonController.editTask = async (req, res, next) => {};
+taskController.markComplete = async (req, res, next) => {
+  console.log('entered');
+  const { taskId } = req.body;
+  const userId = req.userId;
+  console.log(taskId, userId);
+  try {
+    await User.findByIdAndUpdate(userId, {
+      $set: { [`taskProgress.${taskId}.completed`]: true },
+    });
+    next()
+  } catch (err) {
+    console.log(err);
+    next(
+      createErr({
+        method: 'POST',
+        type: 'marking task complete',
+        err,
+      }),
+    );
+  }
+};
 
-lessonController.deleteTask = async (req, res, next) => {};
+taskController.taskResponse = async (req, res, next) => {
+  const { taskId, response } = req.body;
+  const userId = req.userId;
+  try {
+    await User.findByIdAndUpdate(userId, {
+      $set: { [`taskProgress.${taskId}.response`]: response },
+    });
+    req.response = response;
+    next();
+  } catch (err) {
+    console.log(err);
+    next(
+      createErr({
+        method: 'POST',
+        type: 'adding response to complete task',
+        err,
+      }),
+    );
+  }
+};
+
+// Also need Add Task route set up and confirmed. That incoming object
+// will need the Lesson._id, if it doesn’t already have it, and will get User._id from userController.authorize in the same way.
+
+taskController.editTask = async (req, res, next) => {};
+
+taskController.deleteTask = async (req, res, next) => {};
 
 module.exports = taskController;
