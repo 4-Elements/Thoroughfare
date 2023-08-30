@@ -35,9 +35,7 @@ router.post(
   userController.authenticateUser,
   userController.generateToken,
   (req, res) => {
-    res
-      .status(200)
-      .json({ message: 'Login successful', token: res.locals.token });
+    res.status(200).json({ message: 'Login successful' });
   }
 );
 

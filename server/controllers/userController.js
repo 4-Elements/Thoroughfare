@@ -246,13 +246,13 @@ userController.generateToken = (req, res, next) => {
     PRIVATE_KEY,
     { expiresIn: '24h' }
   );
-  res.locals.token = token;
+  res.cookie('token', token);
+  // res.locals.token = token;
   return next();
 };
 
 userController.authorize = async (req, res, next) => {
   // // FAKE IT CODE
-
   //// FAKE MENTEE
   // req.userId = '64eed8dcf235f332d0b952e8';
   // req.username = 'user4';
@@ -260,17 +260,18 @@ userController.authorize = async (req, res, next) => {
   // return next();
 
   // FAKE MENTOR
-  req.userId = '64eed6fbc8b0998dfc2e8cc1';
-  req.username = 'user1';
-  res.locals.auth = true;
-  return next();
+  // req.userId = '64eed6fbc8b0998dfc2e8cc1';
+  // req.username = 'user1';
+  // res.locals.auth = true;
+  // return next();
 
   // REAL CODE
-  if (req.headers.authorization) {
+  if (req.cookies.token) {
     try {
-      const token = await req.headers.authorization.split(' ')[1];
-      const decodedToken = await jwt.verify(token, PRIVATE_KEY);
-      const authenticateUser = await decodedToken;
+      // const token = await req.headers.authorization.split(' ')[1];
+      const token = req.cookies.token;
+      const decodedToken = jwt.verify(token, PRIVATE_KEY);
+      const authenticateUser = decodedToken;
       req.userId = authenticateUser.userId;
       req.username = authenticateUser.username;
       res.locals.auth = true;
