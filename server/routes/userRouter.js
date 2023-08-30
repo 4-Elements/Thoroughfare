@@ -10,7 +10,7 @@ router.get(
   userController.getAuxUserData,
   (req, res) => {
     res.status(200).json(res.locals.userData);
-  }
+  },
 );
 
 router.post(
@@ -19,7 +19,7 @@ router.post(
   userController.createUser,
   (req, res) => {
     res.status(200).json({ message: 'User created successfully' });
-  }
+  },
 );
 
 router.post(
@@ -31,7 +31,7 @@ router.post(
     res
       .status(200)
       .json({ message: 'Login successful', token: res.locals.token });
-  }
+  },
 );
 
 router.get('/secret', userController.authorize, (req, res) => {

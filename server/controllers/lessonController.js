@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const Lesson = require('../routes/lessonRouter');
+const Lesson = require('../models/LessonModel');
+const User = require('../models/UserModel.js');
 
 const lessonController = {};
 
@@ -34,20 +35,23 @@ lessonController.allLessons = async (req, res, next) => {
 lessonController.newLesson = async (req, res, next) => {
   const { lessonNumber, lessonName } = req.body;
   try {
+    console.log('entered');
     const newLesson = new Lesson({
       lessonNumber: lessonNumber,
       lessonName: lessonName,
-      mentorAccess: [], //mentor id will be added? mentorAccess=[Mentor._id]
-      tasks: [], //tasks are added through the task controller specific by id
+      mentorAccess: [req.userId],
+      tasks: [],
     });
-    const savedLesson = await newLesson.save();
 
+    const savedLesson = await newLesson.save();
+    console.log('Saved Lesson:', savedLesson);
     await User.updateMany(
-        { $addToSet: { lessonsAccess: savedLesson._id } } // ?? still needs figuiring out but updated the lessonAccess of the User? 
+      { $addToSet: { lessonsAccess: savedLesson._id } }, // ?? still needs figuiring out but updated the lessonAccess of the User?
     );
 
     next();
   } catch (err) {
+    console.log(err);
     next(
       createErr({
         method: 'POST',
@@ -57,10 +61,6 @@ lessonController.newLesson = async (req, res, next) => {
     );
   }
 };
-
-
-
-
 
 // - Add new Task to a Lesson
 //   - Store taskName, taskPrompt, taskResource, taskQuestion
@@ -78,16 +78,6 @@ lessonController.newLesson = async (req, res, next) => {
 //     - See lessons[] with tasks-complete / total-tasks in that lesson
 //       - Click in a lesson(?) to see completion-status-check, taskname
 //       - Click in to see taskName, taskComplete, taskPrompt, taskResource, taskQuestion, and user's response
-
-
-
-
-
-
-
-
-
-
 
 //editing a new lesson
 lessonController.editLesson = async (req, res, next) => {
