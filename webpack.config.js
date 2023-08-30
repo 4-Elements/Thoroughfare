@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   entry: './client/index.js',
   output: {
-    path: path.resolve(__dirname, './build'),
+    path: path.resolve(__dirname, './dist'),
     filename: 'bundle.js',
     publicPath: '/',
   },
@@ -13,7 +13,7 @@ module.exports = {
     static: {
       // match the output path
       // look here if static files issues
-      directory: path.resolve(__dirname, 'build'),
+      directory: path.resolve(__dirname, 'dist'),
       // match the output 'publicPath'
       publicPath: '/',
     },
