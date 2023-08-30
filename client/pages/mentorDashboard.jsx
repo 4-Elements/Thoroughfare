@@ -1,8 +1,8 @@
 import React from 'react';
-import styles from './mentorDashboard';
+import './mentorDashboard.scss';
 export default function mentorDash() {
   return (
-    <div className="mentorDash">
+    <div className='mentorDash'>
       <h1>mentor dashboard</h1>
     </div>
   );
