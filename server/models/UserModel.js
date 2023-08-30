@@ -7,9 +7,12 @@ const URI = process.env.MONGO_URI || myURI;
 const User = new Schema({
   username: {
     type: String,
+    required: [true, 'Please provide an Email!'],
+    unique: [true, 'Email exists.'],
   },
   password: {
     type: String,
+    required: [true, 'Please provide a Password!'],
   },
   userType: {
     type: String,

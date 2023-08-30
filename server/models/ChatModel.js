@@ -12,11 +12,11 @@ const Chat = new Schema({
     },
   ],
   messages: [
- {
-  sender: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
-  message: String,
-  sent: { type: Date, default: Date.now },
- },
+    {
+      sender: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+      message: String,
+      sent: { type: Date, default: Date.now },
+    },
   ],
 });
 
