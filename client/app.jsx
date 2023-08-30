@@ -18,7 +18,7 @@ export default function App() {
       <div>
         <p>hello</p>
       </div>
-      <Test />
+      {/* <Test /> */}
       {/* <ChatFeed /> */}
     </div>
   );

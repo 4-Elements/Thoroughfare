@@ -37,7 +37,9 @@ export default function mentorDash() {
   return (
     <div className="mentorDash">
       <h1>Mentor Dashboard</h1>
+      <div id='currentMenteelist'>
       <CurrentMenteeList currentMentees={currentMentees} />
+      </div>
     </div>
   );
 }

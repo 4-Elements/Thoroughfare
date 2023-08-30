@@ -1,25 +1,43 @@
 $base-color: black;
 $header-color: white;
+$background-color: rgb(16, 36, 74);
+$primary-color: rgb(51, 78, 127);
+$secondary-color: rgb(12, 52, 125);
 body{
+    background-color: $background-color;
     color:white
+}
+div{
+    background-color: $primary-color;
+    border: 1px hidden;
+    border-radius: 10px;
 }
 .test{
     background-color:aquamarine;
 }
 .sampleProject{
-    background-color: blue;
+    background-color: $secondary-color;
 }
-.projectFeed{
-    background-color: orange;
-}
+// .projectFeed{
+//     background-color: orange;
+// }
 .App{
-    background-color: $base-color;
+    background-color: $background-color;
 }
 #currentMentees{
-    background-color: $base-color;
+    background-color: $secondary-color;
+    height: 90px;
+    width: 90px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    align-items: end;
-
+    // justify-content: flex-end;
+    margin-left: auto;
+    align-items: left;
 }
+.mentorDash {
+    background-color: $primary-color;
+    height: 500px;
+  }
+  #projectFeed{
+    width: 400px
+  }

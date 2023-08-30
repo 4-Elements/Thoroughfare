@@ -19,7 +19,7 @@ const ProjectFeed = (props) => {
   buildProjectFeed();
 
   return (
-    <div>
+    <div id='projectFeed'>
       <div>Current Projects</div>
       {lessonComponentArray}
     </div>
