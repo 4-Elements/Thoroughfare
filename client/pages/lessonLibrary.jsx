@@ -27,9 +27,9 @@ const LessonLibrary = () => {
   }, []);
 
   return (
-    <div className='library-container'>
-      <h2>Lesson Library</h2>
-      {lessons}
+    <div className='mentorDash'>
+      <h1 className='mentorDashTitle'>Lesson Library</h1>
+      <div className='currentMenteeList'>{lessons}</div>
     </div>
   );
 };
