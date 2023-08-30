@@ -16,7 +16,8 @@ export default function Home() {
   useEffect(() => {
     if (userData.hasOwnProperty('userType')) {
       setIsLoggedIn(true);
-      setUserData('userData');
+      setUserData(userData);
+      console.log('home user data', userData);
       setUserType(userData.userType);
       if (userData.userType === 'mentor') {
         return navigate('mentees');
@@ -30,47 +31,47 @@ export default function Home() {
   }, []);
 
   return (
-    <div className='home-layout'>
+    <div className="home-layout">
       <header>
         <nav>
           {userType == 'mentor' && (
-            <NavLink to={'/mentees'} className='nav-btn'>
+            <NavLink to={'/mentees'} className="nav-btn">
               Mentees
             </NavLink>
           )}
           {userType == 'mentor' && (
-            <NavLink to={'/library'} className='nav-btn'>
+            <NavLink to={'/library'} className="nav-btn">
               Lesson Library
             </NavLink>
           )}
           {userType == 'mentee' && (
-            <NavLink to={'/lessons'} className='nav-btn'>
+            <NavLink to={'/lessons'} className="nav-btn">
               Lessons
             </NavLink>
           )}
           {userType == '' && (
-            <NavLink to={'/login'} className='nav-btn'>
+            <NavLink to={'/login'} className="nav-btn">
               Login
             </NavLink>
           )}
           {userType == '' && (
-            <NavLink to={'/signup'} className='nav-btn'>
+            <NavLink to={'/signup'} className="nav-btn">
               Sign Up
             </NavLink>
           )}
           {userType !== '' && (
-            <NavLink to={'/chat'} className='nav-btn'>
+            <NavLink to={'/chat'} className="nav-btn">
               Chat
             </NavLink>
           )}
           {userType !== '' && (
-            <NavLink to={'/logout'} className='nav-btn'>
+            <NavLink to={'/logout'} className="nav-btn">
               Log Out
             </NavLink>
           )}
         </nav>
       </header>
-      <div className='main-body'>
+      <div className="main-body">
         <Outlet />
       </div>
     </div>
