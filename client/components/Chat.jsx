@@ -2,7 +2,7 @@
 
 // build chat component
 
-export default chat = (props) => {
+export default Chat = (props) => {
   return (
     <div class="chat">
       <div class="chatSender">{props.chatSender}</div>
