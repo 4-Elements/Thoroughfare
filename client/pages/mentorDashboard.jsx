@@ -5,7 +5,7 @@
 // ---- imports go here ----
 import React from 'react';
 import { useState, useEffect } from 'react';
-import './mentorDashboard.scss';
+// import './mentorDashboard.scss';
 import CurrentMenteeList from '../components/CurrentMenteeList.jsx';
 
 // ---- build and export mentor dashboard here ----

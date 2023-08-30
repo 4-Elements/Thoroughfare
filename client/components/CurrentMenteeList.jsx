@@ -16,7 +16,7 @@ const CurrentMenteeList = (props) => {
 
   return (
     <div>
-      <div>Current Mentees</div>
+      <div id = 'currentMentees'>Current Mentees</div>
       {menteeComponents}
     </div>
   );

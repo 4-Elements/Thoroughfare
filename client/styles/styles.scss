@@ -1,3 +1,8 @@
+$base-color: black;
+$header-color: white;
+body{
+    color:white
+}
 .test{
     background-color:aquamarine;
 }
@@ -6,4 +11,15 @@
 }
 .projectFeed{
     background-color: orange;
+}
+.App{
+    background-color: $base-color;
+}
+#currentMentees{
+    background-color: $base-color;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: end;
+
 }
