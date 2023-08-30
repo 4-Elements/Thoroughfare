@@ -17,7 +17,25 @@ router.post(
     res.status(200).json(req.savedTask);
   },
 );
-//
+
+router.post(
+  '/markComplete',
+  userController.authorize,
+  taskController.markComplete,
+  (req, res) => {
+    res.status(200).json('Task marked as complete');
+  },
+);
+
+router.post(
+  '/taskResponse',
+  userController.authorize,
+  taskController.taskResponse,
+  (req, res) => {
+    res.status(200).json(req.response);
+  },
+);
+
 router.delete('/deleteTask', taskController.deleteTask, (req, res) => {
   res.status(200).json();
 });

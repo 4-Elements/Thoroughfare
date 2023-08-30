@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Lesson = require('../models/LessonModel.js');
 const Task = require('../models/TaskModel.js');
+const User = require('../models/UserModel.js');
 const taskController = {};
 
 const createErr = error => {
@@ -57,6 +58,49 @@ taskController.newTask = async (req, res, next) => {
       createErr({
         method: 'POST',
         type: 'creating new task',
+        err,
+      }),
+    );
+  }
+};
+
+taskController.markComplete = async (req, res, next) => {
+  console.log('entered');
+  const { taskId } = req.body;
+  const userId = req.userId;
+  console.log(taskId, userId);
+  try {
+    await User.findByIdAndUpdate(userId, {
+      $set: { [`taskProgress.${taskId}.completed`]: true },
+    });
+    next()
+  } catch (err) {
+    console.log(err);
+    next(
+      createErr({
+        method: 'POST',
+        type: 'marking task complete',
+        err,
+      }),
+    );
+  }
+};
+
+taskController.taskResponse = async (req, res, next) => {
+  const { taskId, response } = req.body;
+  const userId = req.userId;
+  try {
+    await User.findByIdAndUpdate(userId, {
+      $set: { [`taskProgress.${taskId}.response`]: response },
+    });
+    req.response = response;
+    next();
+  } catch (err) {
+    console.log(err);
+    next(
+      createErr({
+        method: 'POST',
+        type: 'adding response to complete task',
         err,
       }),
     );
