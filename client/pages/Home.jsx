@@ -16,7 +16,7 @@ export default function Home() {
   useEffect(() => {
     if (userData.hasOwnProperty('userType')) {
       setIsLoggedIn(true);
-      setUserData('userData');
+      setUserData(userData);
       setUserType(userData.userType);
       if (userData.userType === 'mentor') {
         return navigate('mentees');
