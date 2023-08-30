@@ -20,6 +20,18 @@ export default function mentorDash() {
       });
   };
 
+  // NOTE: This is just for testing & should be removed later
+  useEffect(
+    () =>
+      setCurrentMentees([
+        {
+          name: 'Todd',
+          lessonsAssigned: [{ name: 'React' }, { name: 'Redux' }],
+        },
+      ]),
+    []
+  );
+
   // remove this - it is just for testing
 
   return (
