@@ -26,8 +26,8 @@ const CurrentMenteeList = (props) => {
   }, []);
 
   return (
-    <div>
-      <div>Current Mentees</div>
+    <div className="currentMenteeList">
+      <div className="currentMenteeListTitle">Current Mentees</div>
       {menteeComponents}
     </div>
   );
