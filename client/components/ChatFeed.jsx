@@ -1,6 +1,6 @@
 // ---- imports here ----
 import React from "react";
-// import Chat from './Chat.js';
+import Chat from './Chat.jsx';
 import { useState } from 'react';
 
 // ---- helper functions ----
@@ -9,7 +9,15 @@ import { useState } from 'react';
 // ---- build chat feed here ----
 
 export default function ChatFeed () {
-    const [chats, setChats] = useState([]);
+    const [chats, setChats] = useState([  <Chat
+      chatMessage={'array.message'}
+      chatSender={'array.sender'}
+      chatTimestamp={'array.timestamp'}
+    />,  <Chat
+    chatMessage={'array.message'}
+    chatSender={'array.sender'}
+    chatTimestamp={'array.timestamp'}
+  />]);
     const getMsgs = async () => {
       const response = await fetch('/npm chat');
       const res = await response.json();
@@ -32,7 +40,7 @@ export default function ChatFeed () {
       <div>
         <p>I am a chat feed</p>
       </div>
-      {/* <div>{chats}</div> */}
+      <div>{chats}</div>
     </div>
   );
 };
