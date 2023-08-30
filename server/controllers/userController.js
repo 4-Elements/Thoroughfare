@@ -260,10 +260,10 @@ userController.authorize = async (req, res, next) => {
   // return next();
 
   // FAKE MENTOR
-  // req.userId = '64eed6fbc8b0998dfc2e8cc1';
-  // req.username = 'user1';
-  // res.locals.auth = true;
-  // return next();
+  req.userId = '64eed6fbc8b0998dfc2e8cc1';
+  req.username = 'user1';
+  res.locals.auth = true;
+  return next();
 
   // REAL CODE
   if (req.cookies.token) {
