@@ -1,5 +1,5 @@
 // imports
-
+import React from 'react'
 // build chat component
 
 export default Chat = (props) => {
