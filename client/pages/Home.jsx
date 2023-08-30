@@ -48,7 +48,7 @@ export default function Home() {
               Lessons
             </NavLink>
           )}
-          {userType == '' && (
+          {userType && (
             <NavLink to={'/login'} className='nav-btn'>
               Login
             </NavLink>

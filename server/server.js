@@ -8,14 +8,14 @@ const cookieParser = require('cookie-parser');
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+const cors = require('cors');
 const userRouter = require('./routes/userRouter');
 const lessonRouter = require('./routes/lessonRouter');
 const taskRouter = require('./routes/taskRouter');
 // const chatRouter = require('./routes/chatRouter');
 
 const myURI = 'mongodb+srv://tristan913:1234@cluster0.zlp4cgx.mongodb.net/';
-
+app.use(cors());
 mongoose
   .connect(myURI, {
     useNewUrlParser: true,

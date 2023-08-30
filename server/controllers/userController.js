@@ -8,7 +8,7 @@ const PRIVATE_KEY = 'fC0mJaPOA9XHLkMkmt8j';
 
 const userController = {};
 
-const createErr = (error) => {
+const createErr = error => {
   const { method, type, err } = error;
   return {
     log: `userController.${method} ${type}: ERROR: ${
@@ -38,7 +38,7 @@ userController.getUser = async (req, res, next) => {
         method: 'POST',
         type: 'Looking up user',
         err,
-      })
+      }),
     );
   }
 };
@@ -55,7 +55,7 @@ userController.getAuxUserData = async (req, res, next) => {
         mentorCode: mentorCode,
         userType: 'mentee',
       });
-      const menteeData = menteeList.map((mentee) => {
+      const menteeData = menteeList.map(mentee => {
         return {
           username: mentee.username,
           lessonsAssigned: mentee.lessonsAssigned,
@@ -65,7 +65,7 @@ userController.getAuxUserData = async (req, res, next) => {
       console.log('mentee list', menteeData);
       //// Use [lessonsAccess] -> Get lesson titles
       const lessonListMentor = await Lesson.find({ mentorAccess: _id });
-      const lessonDataMentor = lessonListMentor.map((lesson) => {
+      const lessonDataMentor = lessonListMentor.map(lesson => {
         return {
           lessonNumber: lesson.lessonNumber,
           lessonName: lesson.lessonName,
@@ -88,7 +88,7 @@ userController.getAuxUserData = async (req, res, next) => {
           method: 'getAuxUserData-mentor',
           type: 'Fetching extra mentor data.',
           err,
-        })
+        }),
       );
     }
   } else if (userType == 'mentee') {
@@ -97,7 +97,7 @@ userController.getAuxUserData = async (req, res, next) => {
       const lessonListMentee = await Lesson.find({
         _id: { $in: lessonsAccess },
       });
-      const lessonDataMentee = lessonListMentee.map((lesson) => {
+      const lessonDataMentee = lessonListMentee.map(lesson => {
         return {
           lessonNumber: lesson.lessonNumber,
           lessonName: lesson.lessonName,
@@ -133,7 +133,7 @@ userController.getAuxUserData = async (req, res, next) => {
           method: 'getAuxUserData-mentor',
           type: 'Fetching extra mentor data.',
           err,
-        })
+        }),
       );
     }
   }
@@ -143,17 +143,17 @@ userController.getAuxUserData = async (req, res, next) => {
 userController.hashPass = (req, res, next) => {
   bcrypt
     .hash(req.body.password, 10)
-    .then((hashedPassword) => {
+    .then(hashedPassword => {
       res.locals.hashedPassword = hashedPassword;
       return next();
     })
-    .catch((e) => {
+    .catch(e => {
       return next(
         createErr({
           method: 'hashPass',
           type: 'Hashing Password',
           err,
-        })
+        }),
       );
     });
 };
@@ -192,7 +192,7 @@ userController.createUser = async (req, res, next) => {
         method: 'POST',
         type: 'creating user',
         err,
-      })
+      }),
     );
   }
 };
@@ -204,12 +204,12 @@ userController.authenticateUser = (req, res, next) => {
   User.findOne({
     username: username,
   })
-    .then((user) => {
+    .then(user => {
       console.log('Found user while authenticating', user);
       res.locals.userId = user._id;
       bcrypt
         .compare(req.body.password, user.password)
-        .then((passwordCheck) => {
+        .then(passwordCheck => {
           if (!passwordCheck) {
             console.log('Failed password check');
             return res
@@ -217,24 +217,24 @@ userController.authenticateUser = (req, res, next) => {
               .send({ message: 'Password does not match', error });
           } else return next();
         })
-        .catch((err) => {
+        .catch(err => {
           console.log('Incorrect password');
           return next(
             createErr({
               method: 'authenticateUser',
               type: 'Password does not match.',
               err,
-            })
+            }),
           );
         });
     })
-    .catch((err) => {
+    .catch(err => {
       return next(
         createErr({
           method: 'authenticateUser',
           type: 'Authenticating User',
           err,
-        })
+        }),
       );
     });
 };
@@ -244,9 +244,9 @@ userController.generateToken = (req, res, next) => {
   const token = jwt.sign(
     { userId: res.locals.userId, username: username },
     PRIVATE_KEY,
-    { expiresIn: '24h' }
+    { expiresIn: '24h' },
   );
-  res.cookie('token', token);
+  res.cookie('token', token, { maxAge: 900000 });
   // res.locals.token = token;
   return next();
 };
@@ -282,7 +282,7 @@ userController.authorize = async (req, res, next) => {
           method: 'Autorization',
           type: 'Authorizing User Session',
           err,
-        })
+        }),
       );
     }
   } else {
@@ -307,7 +307,7 @@ userController.deleteUser = async (req, res, next) => {
         method: 'POST',
         type: 'creating user',
         err,
-      })
+      }),
     );
   }
 };
