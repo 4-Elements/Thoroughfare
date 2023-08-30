@@ -38,7 +38,7 @@ export default function MentorDash() {
 
   return (
     <div className="mentorDash">
-      <h1>Mentor Dashboard</h1>
+      <h1 className="mentorDashTitle">Mentor Dashboard</h1>
       <CurrentMenteeList />
     </div>
   );
