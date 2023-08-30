@@ -3,6 +3,7 @@
 // ---- imports go here ----
 import React from 'react';
 import Mentee from './Mentee.jsx';
+import './CurrentMenteeList.scss';
 
 // ---- build & export the current mentee list here ----
 const CurrentMenteeList = (props) => {
@@ -15,7 +16,7 @@ const CurrentMenteeList = (props) => {
   });
 
   return (
-    <div>
+    <div className="menteeList">
       <div>Current Mentees</div>
       {menteeComponents}
     </div>

@@ -12,13 +12,23 @@ import CurrentMenteeList from '../components/CurrentMenteeList.jsx';
 export default function mentorDash() {
   const [currentMentees, setCurrentMentees] = useState([]);
 
-  const getMentees = () => {
-    fetch(queryString)
-      .then((resp) => resp.json())
-      .then((data) => {
-        setCurrentMentees(data);
-      });
-  };
+  // const getMentees = () => {
+  //   console.log('getMentees invoked');
+  //   fetch('/api/user/');
+  //   {
+  //     method: 'GET',
+  //       (headers = {
+  //         Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGVlZDZmYmM4YjA5OThkZmMyZThjYzEiLCJ1c2VybmFtZSI6InVzZXIxIiwiaWF0IjoxNjkzMzkzODUyLCJleHAiOjE2OTM0ODAyNTJ9.LVyytnUK9JWXaYUftEOS-mt7qVdHA9WDfmSgU8B41qI`,
+  //         'Content-Type': 'application/json',
+  //       }
+  //         .then((resp) => resp.json())
+  //         .then((data) => {
+  //           console.log('data', data);
+  //           setCurrentMentees(data);
+  //         }));
+  //   }
+
+  // getMentees();
 
   // NOTE: This is just for testing & should be removed later
   useEffect(
