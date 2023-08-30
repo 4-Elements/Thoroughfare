@@ -31,30 +31,10 @@ userController.getUser = async (req, res, next) => {
         method: 'POST',
         type: 'creating user',
         err,
-      }),
+      })
     );
   }
 };
-
-userController.getUser = async (req, res, next) => {
-  try {
-    const response = await User.findOne({
-      username: username,
-    });
-    res.locals.allMessages = response;
-    next();
-  } catch (err) {
-    next(
-      createErr({
-        method: 'POST',
-        type: 'creating user',
-        err,
-      }),
-    );
-  }
-};
-
-
 
 userController.hashPass = (req, res, next) => {
   bcrypt
@@ -75,15 +55,32 @@ userController.hashPass = (req, res, next) => {
 };
 
 userController.createUser = async (req, res, next) => {
-  const { username } = req.body;
+  const { username, userType } = req.body;
   const password = res.locals.hashedPassword;
 
+  const newUser = new User({
+    username: username,
+    password: password,
+  });
+
+  if (req.body.mentorCode && req.body.mentorCode.length) {
+    newUser.userType = 'mentee';
+    newUser.mentorCode = req.body.mentorCode;
+  } else {
+    newUser.userType = 'mentor';
+    newUser.mentorCode = Date.now() % 100000;
+  }
   try {
-    const newUser = new User({
-      username: username,
-      password: password,
-    });
-    const savedUser = await newUser.save();
+    if (newUser.userType === 'mentee') {
+      newUserMentor = await User.find({
+        mentorCode: newUser.mentorCode,
+        userType: 'mentor',
+      });
+      if (newUserMentor.length === 0)
+        return res.status(400).send({ message: 'Error: Invalid mentor code.' });
+    }
+    let savedUser = await newUser.save();
+    res.locals.user = savedUser;
     next();
   } catch (err) {
     next(
@@ -109,7 +106,7 @@ userController.authenticateUser = (req, res, next) => {
         .compare(req.body.password, user.password)
         .then((passwordCheck) => {
           if (!passwordCheck) {
-            return response
+            return res
               .status(400)
               .send({ message: 'Password does not match', error });
           } else next();
@@ -253,25 +250,6 @@ userController.authorize = async (req, res, next) => {
         type: 'Authorizing User Session',
         err,
       })
-    );
-  }
-};
-
-userController.deleteUser = async (req, res, next) => {
-  const { username } = req.body;
-  try {
-    const newUser = new User({
-      username: username,
-    });
-    const deletedUser = await newUser.delete();
-    next();
-  } catch (err) {
-    next(
-      createErr({
-        method: 'POST',
-        type: 'creating user',
-        err,
-      }),
     );
   }
 };

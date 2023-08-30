@@ -44,13 +44,13 @@ messages: [{sender: User._id, message: String, sent: Date}]
 ### User Accounts
 
 - Create New Mentor
-  - Store username, userType='mentor', menteeIds=[], lessonsAccess=[], activeChats=[]
-  - Hash and store password
-  - Generate and store mentorCode
+    - Store username, userType='mentor', menteeIds=[], lessonsAccess=[], activeChats=[]
+    - Hash and store password
+    - Generate and store mentorCode
 - Create new Mentee
-  - Store username, userType='mentee', mentor's mentorCode, lessonsAssigned=[], taskProgress=[], activeChats=[]
-  - Hash and store password
-  - Find Mentor's \_id by mentorCode and add Mentee's user.\_id to the Mentor's menteeIds
+    - Store username, userType='mentee', mentor's mentorCode, lessonsAssigned=[], taskProgress=[], activeChats=[]
+    - Hash and store password
+    - Find Mentor's \_id by mentorCode and add Mentee's user.\_id to the Mentor's menteeIds
   - Create new Chat between Mentor and Mentee, add the Chat.\_id to both users' activeChats
 
 ### Mentor
