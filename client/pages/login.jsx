@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 export default function Login() {
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
-
+  const navigate = useNavigate();
   async function login(event) {
     event.preventDefault();
     try {
@@ -16,15 +16,19 @@ export default function Login() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          username: username,
+          username: userName,
           password: password,
         }),
       });
       console.log('reseponse', response);
       const data = await response.json();
-      const token = data.token;
-      console.log(token);
-      console.log(data);
+      setTimeout(() => {
+        window.location.reload();
+      }, 30000);
+
+      if (data) {
+        navigate('/');
+      }
     } catch (err) {
       alert(err);
     }
