@@ -9,7 +9,6 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
 const userRouter = require('./routes/userRouter');
 // const lessonRouter = require('./routes/lessonRouter');
 // const taskRouter = require('./routes/taskRouter');

@@ -9,7 +9,7 @@ router.get(
   userController.getUser,
   userController.getAuxUserData,
   (req, res) => {
-    res.status(200).json({ user: res.locals.user });
+    res.status(200).json(res.locals.userData);
   }
 );
 
