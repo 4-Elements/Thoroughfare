@@ -19,9 +19,41 @@ const createErr = (error) => {
 };
 
 userController.getUser = async (req, res, next) => {
+  // Have User._id from authorization check
+  // Fetch all user data and save
+  const userId = req.userId;
   try {
     const response = await User.findOne({
-      username: username,
+      _id: userId,
+    });
+    res.locals.user = response.user;
+    next();
+  } catch (err) {
+    next(
+      createErr({
+        method: 'POST',
+        type: 'Looking up user',
+        err,
+      })
+    );
+  }
+};
+
+userController.getAuxUserData = async (req, res, next) => {
+  // Have User Obj
+  // Mentor:
+  //// Use [menteeIds] to grab mentee objs -> username, assigned, progress
+  //// Use [lessonsAccess] -> Get lesson titles
+  //// Also attach mentorCode
+  // Mentee
+  //// Use [lessonsAssigned] to grab lessons to grab tasks
+
+  next();
+  const { userId } = req.body;
+
+  try {
+    const response = await User.findOne({
+      _id: userId,
     });
     res.locals.allMessages = response;
     next();
@@ -145,7 +177,6 @@ userController.generateToken = (req, res, next) => {
 };
 
 userController.authorize = async (req, res, next) => {
-  const { username } = req.body;
   try {
     const token = await req.headers.authorization.split(' ')[1];
     const decodedToken = await jwt.verify(token, PRIVATE_KEY);
@@ -154,6 +185,7 @@ userController.authorize = async (req, res, next) => {
     req.username = authenticateUser.username;
     next();
   } catch (err) {
+    res.redirect('/login');
     next(
       createErr({
         method: 'Autorization',
@@ -235,13 +267,13 @@ userController.generateToken = (req, res, next) => {
 };
 
 userController.authorize = async (req, res, next) => {
-  const { username } = req.body;
   try {
     const token = await req.headers.authorization.split(' ')[1];
     const decodedToken = await jwt.verify(token, PRIVATE_KEY);
     const authenticateUser = await decodedToken;
     req.userId = authenticateUser.userId;
     req.username = authenticateUser.username;
+    console.log(req.userId);
     next();
   } catch (err) {
     next(

@@ -3,6 +3,16 @@ const userController = require('../controllers/userController');
 
 const router = express.Router();
 
+router.get(
+  '/',
+  userController.authorize,
+  userController.getUser,
+  userController.getAuxUserData,
+  (req, res) => {
+    res.status(200).json({ user: res.locals.user });
+  }
+);
+
 router.post(
   '/createUser',
   userController.hashPass,
