@@ -3,6 +3,7 @@
 // ---- imports go here ----
 import React from 'react';
 import Project from './Project.jsx';
+// import './ProjectFeed.scss';
 
 // ---- build & export project feed component here ----
 const ProjectFeed = (props) => {

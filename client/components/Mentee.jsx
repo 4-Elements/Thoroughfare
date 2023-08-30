@@ -3,12 +3,13 @@
 // ---- Imports go here ----
 import React from 'react';
 import ProjectFeed from './ProjectFeed.jsx';
+import './Mentee.scss';
 
 // ---- build & export Mentee component here ----
 
 const Mentee = (props) => {
   return (
-    <div>
+    <div className="Mentee">
       <div>Mentee Name: {props.menteeInfo.name}</div>
       <ProjectFeed
         lessonsAssigned={props.menteeInfo.lessonsAssigned}

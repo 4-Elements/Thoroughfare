@@ -1,14 +1,18 @@
 // ---- imports go here ----
-import ChatFeed from './ChatFeed.jsx';
+// import ChatFeed from './ChatFeed.jsx';
 import { useState } from 'react';
+import React from 'react';
+// import './Task.scss';
 
 // ---- build Task here ----
-export default task = (props) => {
+const Task = (props) => {
   return (
     <div className='taskFeedSample'>
       <div>Task Name: {props.taskName}</div>
       <div></div>
-      <ChatFeed taskName={props.taskName} />
+      {/* <ChatFeed taskName={props.taskName} /> */}
     </div>
   );
 };
+
+export default Task;
