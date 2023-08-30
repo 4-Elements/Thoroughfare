@@ -27,9 +27,9 @@ const Mentee = (props) => {
   };
 
   return (
-    <div>
+    <div className="Mentee">
       <div className="MenteeNameAndButton">
-        <div>Mentee Name: {props.menteeName}</div>
+        <div className="menteeName">Mentee Name: {props.menteeName}</div>
         <button
           id={props.menteeName + 'Show/HideButton'}
           className="showHideButton"

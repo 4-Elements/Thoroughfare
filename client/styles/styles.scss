@@ -74,3 +74,71 @@ header nav {
 .projectFeed {
   background-color: orange;
 }
+
+.mentorDash {
+  border: 1px gray solid;
+  margin-top: 100px;
+  padding: 10px;
+  border-radius: 20px;
+}
+
+.mentorDashTitle {
+  text-align: center;
+}
+
+.currentMenteeList {
+  border: 1px lightgray solid;
+  margin-left: 20px;
+  margin-right: 20px;
+  padding: 10px;
+  background-color: rgba(97, 145, 215, 1);
+  border-radius: 20px;
+}
+
+.currentMenteeListTitle {
+  text-align: center;
+  font-size: 22px;
+  color: whitesmoke;
+  font-weight: bold;
+}
+
+.Mentee {
+  background-color: whitesmoke;
+  border: 1px lightgray solid;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 20px;
+}
+
+.MenteeNameAndButton {
+  display: flex;
+  justify-content: space-between;
+}
+
+.menteeName {
+  font-size: 20px;
+  font-weight: bold;
+  padding: 5px;
+}
+
+.showHideButton {
+  border-radius: 20px;
+  background-color: rgba(97, 145, 215, 1);
+  color: whitesmoke;
+  font-weight: bold;
+}
+
+.showHideButton:hover {
+  cursor: pointer;
+  background-color: lightgray;
+  color: whitesmoke;
+}
+
+.showHideButtonContainer {
+  display: flex;
+  justify-content: right;
+}
+
+.ProjectFeed {
+  padding-left: 25px;
+}

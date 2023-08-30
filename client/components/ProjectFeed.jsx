@@ -35,7 +35,7 @@ const ProjectFeed = (props) => {
   }
 
   return (
-    <div id={props.name + 'ProjectFeed'}>
+    <div id={props.name + 'ProjectFeed'} className="ProjectFeed">
       <div>Current Projects</div>
       {lessonComponentArray}
     </div>
