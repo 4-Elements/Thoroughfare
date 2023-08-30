@@ -5,7 +5,7 @@ import { useState } from 'react';
 // ---- build Task here ----
 export default task = (props) => {
   return (
-    <div>
+    <div className='taskFeedSample'>
       <div>Task Name: {props.taskName}</div>
       <div></div>
       <ChatFeed taskName={props.taskName} />
