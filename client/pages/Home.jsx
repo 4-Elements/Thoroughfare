@@ -17,7 +17,6 @@ export default function Home() {
     if (userData.hasOwnProperty('userType')) {
       setIsLoggedIn(true);
       setUserData(userData);
-      console.log('home user data', userData);
       setUserType(userData.userType);
       if (userData.userType === 'mentor') {
         return navigate('mentees');
