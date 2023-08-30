@@ -259,7 +259,7 @@ userController.authorize = async (req, res, next) => {
   //  res.locals.auth = true;
   // return next();
 
-  // FAKE MENTOR
+  // // FAKE MENTOR
   req.userId = '64eed6fbc8b0998dfc2e8cc1';
   req.username = 'user1';
   res.locals.auth = true;

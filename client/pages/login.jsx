@@ -49,7 +49,7 @@ export default function Login() {
                 className='input-one'
                 placeholder='Username'
                 value={userName}
-                onChange={event => {
+                onChange={(event) => {
                   setUserName(event.target.value);
                 }}
               />
@@ -60,7 +60,7 @@ export default function Login() {
                 type='text'
                 placeholder='Password'
                 value={password}
-                onChange={event => {
+                onChange={(event) => {
                   setPassword(event.target.value);
                 }}
               />
