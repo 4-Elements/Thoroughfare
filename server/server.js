@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: true }));
 
 const userRouter = require('./routes/userRouter');
 const lessonRouter = require('./routes/lessonRouter');
-// const taskRouter = require('./routes/taskRouter');
+const taskRouter = require('./routes/taskRouter');
 // const chatRouter = require('./routes/chatRouter');
 
 const myURI = 'mongodb+srv://tristan913:1234@cluster0.zlp4cgx.mongodb.net/';
@@ -32,7 +32,7 @@ mongoose
 
 app.use('/api/user', userRouter);
 app.use('/api/lesson', lessonRouter);
-// app.use('/api/task', taskRouter);
+app.use('/api/task', taskRouter);
 // app.use('/api/chat', chatRouter);
 
 app.get('/', (req, res) => {

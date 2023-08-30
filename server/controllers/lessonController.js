@@ -48,7 +48,7 @@ lessonController.newLesson = async (req, res, next) => {
     await User.updateMany(
       { $addToSet: { lessonsAccess: savedLesson._id } }, // ?? still needs figuiring out but updated the lessonAccess of the User?
     );
-
+    req.savedLesson = savedLesson;
     next();
   } catch (err) {
     console.log(err);

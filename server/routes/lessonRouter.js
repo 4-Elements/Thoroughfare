@@ -19,7 +19,7 @@ router.post(
   userController.authorize,
   lessonController.newLesson,
   (req, res) => {
-    res.status(200).json();
+    res.status(200).json(req.savedLesson);
   },
 );
 
