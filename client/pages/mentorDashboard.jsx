@@ -5,20 +5,20 @@
 // ---- imports go here ----
 import React from 'react';
 import { useState, useEffect } from 'react';
-import './mentorDashboard.scss';
+// import './mentorDashboard.scss';
 import CurrentMenteeList from '../components/CurrentMenteeList.jsx';
 
 // ---- build and export mentor dashboard here ----
-export default function mentorDash() {
+export default function MentorDash() {
   const [currentMentees, setCurrentMentees] = useState([]);
 
-  const getMentees = () => {
-    fetch(queryString)
-      .then((resp) => resp.json())
-      .then((data) => {
-        setCurrentMentees(data);
-      });
-  };
+  // const getMentees = () => {
+  //   fetch(queryString)
+  //     .then((resp) => resp.json())
+  //     .then((data) => {
+  //       setCurrentMentees(data);
+  //     });
+  // };
 
   // NOTE: This is just for testing & should be removed later
   useEffect(
@@ -35,9 +35,9 @@ export default function mentorDash() {
   // remove this - it is just for testing
 
   return (
-    <div className="mentorDash">
+    <div className='mentorDash'>
       <h1>Mentor Dashboard</h1>
-      <CurrentMenteeList currentMentees={currentMentees} />
+      {/* <CurrentMenteeList currentMentees={currentMentees} /> */}
     </div>
   );
 }
